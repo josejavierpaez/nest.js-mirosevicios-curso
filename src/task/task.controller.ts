@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -15,8 +16,13 @@ export class TaskController {
   constructor(readonly taskService: TaskService) {}
 
   @Post()
-  create(@Body() taskDto: TaskDto): TaskDto {
-    return this.taskService.create(taskDto);
+  create(@Body() taskDto: TaskDto) {
+    // return this.taskService.create(taskDto);
+
+    throw new BadRequestException('test error');
+    return new Promise((resolve, reject) => {
+      setTimeout(() => reject('Error en la peticion'), 2000);
+    });
   }
 
   @Get()
